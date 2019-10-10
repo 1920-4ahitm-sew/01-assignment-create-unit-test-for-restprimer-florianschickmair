@@ -9,6 +9,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
+
+
 
 public class TimeServerResourceIT {//integrationtest
 
@@ -16,12 +21,13 @@ public class TimeServerResourceIT {//integrationtest
     private WebTarget tut;
 
     @Before
-    public void initClient(){
+    public void initClient() {
         this.client = ClientBuilder.newClient();
         this.tut = this.client.target("http://localhost:8080/restprimer/rs/time");
         //tut ...target under test
 
     }
+
     @Test
     public void fetchTime() {
         Response response = this.tut.request(MediaType.TEXT_PLAIN).get();
@@ -29,3 +35,4 @@ public class TimeServerResourceIT {//integrationtest
         String payload = response.readEntity(String.class);
         assertTrue(payload.startsWith("Time: "));
     }
+}
